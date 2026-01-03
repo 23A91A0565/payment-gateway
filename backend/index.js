@@ -1,9 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const { Client } = require("pg");
+const ordersRoutes = require("./routes/orders");
 
 const app = express();
 app.use(express.json());
+app.use(ordersRoutes);
 
 const db = new Client({ connectionString: process.env.DATABASE_URL });
 db.connect();
