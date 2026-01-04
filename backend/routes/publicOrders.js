@@ -3,14 +3,14 @@ const router = express.Router();
 const db = require("../db");
 
 /**
- * GET /api/v1/orders/:order_id/public
+ * GET /api/v1/orders/:id/public
  */
-router.get("/api/v1/orders/:order_id/public", async (req, res) => {
-  const { order_id } = req.params;
+router.get("/:id/public", async (req, res) => {
+  const { id } = req.params;
 
   const { rows } = await db.query(
-    "SELECT id, amount, currency, status FROM orders WHERE id=$1",
-    [order_id]
+    "SELECT id, amount, currency FROM orders WHERE id=$1",
+    [id]
   );
 
   if (!rows.length) {
@@ -22,7 +22,7 @@ router.get("/api/v1/orders/:order_id/public", async (req, res) => {
     });
   }
 
-  res.status(200).json(rows[0]);
+  res.json(rows[0]);
 });
 
 module.exports = router;
