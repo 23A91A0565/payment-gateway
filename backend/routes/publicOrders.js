@@ -4,7 +4,6 @@ const db = require("../db");
 
 /**
  * GET /api/v1/orders/:order_id/public
- * Public order lookup for checkout page
  */
 router.get("/api/v1/orders/:order_id/public", async (req, res) => {
   const { order_id } = req.params;
@@ -23,7 +22,7 @@ router.get("/api/v1/orders/:order_id/public", async (req, res) => {
     });
   }
 
-  return res.status(200).json(rows[0]);
+  res.status(200).json(rows[0]);
 });
 
 module.exports = router;
