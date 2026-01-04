@@ -1,13 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const paymentsRoutes = require("./routes/payments");
 
 const db = require("./db"); // ✅ shared DB connection
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+app.use(paymentsRoutes);
 // Health check
 app.get("/health", async (req, res) => {
   try {
