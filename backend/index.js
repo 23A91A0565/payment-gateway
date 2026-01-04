@@ -1,32 +1,36 @@
 require("dotenv").config();
 const express = require("express");
-const { Client } = require("pg");
-const ordersRoutes = require("./routes/orders");
+const cors = require("cors");
+
+const db = require("./db"); // ✅ shared DB connection
 
 const app = express();
+app.use(cors());
 app.use(express.json());
-app.use(ordersRoutes);
 
-const db = new Client({ connectionString: process.env.DATABASE_URL });
-db.connect();
-
+// Health check
 app.get("/health", async (req, res) => {
   try {
     await db.query("SELECT 1");
     res.status(200).json({
       status: "healthy",
       database: "connected",
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-  } catch {
+  } catch (err) {
     res.status(200).json({
       status: "healthy",
       database: "disconnected",
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 });
 
-app.listen(process.env.PORT, () =>
-  console.log("API running on port", process.env.PORT)
-);
+// Routes
+const ordersRoutes = require("./routes/orders");
+app.use(ordersRoutes);
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`API running on port ${PORT}`);
+});

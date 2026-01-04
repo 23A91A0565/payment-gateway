@@ -1,6 +1,4 @@
-const { Client } = require("pg");
-const db = new Client({ connectionString: process.env.DATABASE_URL });
-db.connect();
+const db = require("../db");
 
 module.exports = async (req, res, next) => {
   const key = req.header("X-Api-Key");

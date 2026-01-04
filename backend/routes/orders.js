@@ -1,13 +1,10 @@
+const db = require("../db");
 const express = require("express");
 const router = express.Router();
 const { Client } = require("pg");
 const auth = require("../middleware/auth");
 const { generateId } = require("../utils/idGenerator");
 
-const db = new Client({
-  connectionString: process.env.DATABASE_URL
-});
-db.connect();
 
 /**
  * POST /api/v1/orders
