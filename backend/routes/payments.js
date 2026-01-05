@@ -39,11 +39,26 @@ router.get("/stats", auth, async (req, res) => {
  * GET /api/v1/payments
  */
 router.get("/", auth, async (req, res) => {
+  const page = Number(req.query.page || 1);
+  const limit = Number(req.query.limit || 10);
+  const offset = (page - 1) * limit;
+
   const { rows } = await db.query(
-    "SELECT * FROM payments WHERE merchant_id=$1 ORDER BY created_at DESC",
-    [req.merchant.id]
+    `
+    SELECT * FROM payments
+    WHERE merchant_id = $1
+    ORDER BY created_at DESC
+    LIMIT $2 OFFSET $3
+    `,
+    [req.merchant.id, limit, offset]
   );
-  res.json(rows);
+
+  res.json({
+    page,
+    limit,
+    count: rows.length,
+    data: rows
+  });
 });
 
 /**
