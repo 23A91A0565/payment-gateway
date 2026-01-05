@@ -57,21 +57,35 @@ http://localhost:8000
 
 ## 📦 Core APIs
 
-### Orders
-POST /api/v1/orders
-GET  /api/v1/orders/:id
-GET  /api/v1/orders/:id/public
 
-### Payments
-POST /api/v1/payments              (Authenticated)
-POST /api/v1/payments/public       (Checkout)
-GET  /api/v1/payments
-GET  /api/v1/payments/stats
-GET  /api/v1/payments/:id
+### 🧾 Orders APIs
 
-### Authentication Headers (Protected APIs)
+| Method | Endpoint                         | Description                          | Access |
+|------:|----------------------------------|--------------------------------------|--------|
+| POST  | `/api/v1/orders`                 | Create a new order                   | Authenticated |
+| GET   | `/api/v1/orders/:id`             | Get order details by ID              | Authenticated |
+| GET   | `/api/v1/orders/:id/public`      | Public order fetch for checkout      | Public |
+
+---
+
+### 💳 Payments APIs
+
+| Method | Endpoint                         | Description                          | Access |
+|------:|----------------------------------|--------------------------------------|--------|
+| POST  | `/api/v1/payments`               | Create payment (direct API)          | Authenticated |
+| POST  | `/api/v1/payments/public`        | Create payment via checkout page     | Public |
+| GET   | `/api/v1/payments`               | List all payments (with pagination)  | Authenticated |
+| GET   | `/api/v1/payments/stats`         | Get payment analytics/statistics     | Authenticated |
+| GET   | `/api/v1/payments/:id`           | Get payment details by ID            | Authenticated |
+
+---
+
+### 🔐 Authentication Headers (Required for Protected APIs)
+
+```http
 X-Api-Key:    key_test_abc123
 X-Api-Secret: secret_test_xyz789
+```
 
 ## 🧩 Checkout Page (Hosted Payment)
 cd checkout-page
@@ -130,3 +144,4 @@ payment-gateway/
 ├── frontend/
 ├── docker-compose.yml
 ├── README.md
+
