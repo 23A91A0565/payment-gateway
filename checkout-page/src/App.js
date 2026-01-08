@@ -1,4 +1,5 @@
-import Checkout from "./pages/Checkout";
+import React from 'react';
+import Checkout from './pages/Checkout';
 
 function App() {
   return <Checkout />;

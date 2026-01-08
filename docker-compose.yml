@@ -22,9 +22,8 @@ services:
     container_name: gateway_api
     ports:
       - "8000:8000"
-    environment:
-      DATABASE_URL: postgresql://gateway_user:gateway_pass@postgres:5432/payment_gateway
-      PORT: 8000
+    env_file:
+      - .env.example
     depends_on:
       postgres:
         condition: service_healthy

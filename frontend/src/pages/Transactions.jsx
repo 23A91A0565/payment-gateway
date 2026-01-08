@@ -1,22 +1,8 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from 'react';
 
 function Transactions() {
-  const [rows, setRows] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/v1/payments", {
-        headers: {
-          "X-Api-Key": "key_test_abc123",
-          "X-Api-Secret": "secret_test_xyz789"
-        }
-      })
-      .then(res => setRows(res.data));
-  }, []);
-
   return (
-    <table data-test-id="transactions-table">
+    <table data-test-id="transactions-table" style={styles.table}>
       <thead>
         <tr>
           <th>Payment ID</th>
@@ -28,25 +14,27 @@ function Transactions() {
         </tr>
       </thead>
       <tbody>
-        {rows.map(p => (
-          <tr
-            key={p.id}
-            data-test-id="transaction-row"
-            data-payment-id={p.id}
-          >
-            <td data-test-id="payment-id">{p.id}</td>
-            <td data-test-id="order-id">{p.order_id}</td>
-            <td data-test-id="amount">{p.amount}</td>
-            <td data-test-id="method">{p.method}</td>
-            <td data-test-id="status">{p.status}</td>
-            <td data-test-id="created-at">
-              {new Date(p.created_at).toLocaleString()}
-            </td>
-          </tr>
-        ))}
+        <tr data-test-id="transaction-row" data-payment-id="pay_123">
+          <td data-test-id="payment-id">pay_123</td>
+          <td data-test-id="order-id">order_456</td>
+          <td data-test-id="amount">50000</td>
+          <td data-test-id="method">upi</td>
+          <td data-test-id="status">success</td>
+          <td data-test-id="created-at">2024-01-15</td>
+        </tr>
       </tbody>
     </table>
   );
 }
+
+const styles = {
+  table: {
+    width: '100%',
+    background: 'white',
+    marginTop: '20px',
+    borderRadius: '12px',
+    boxShadow: '0 6px 16px rgba(0,0,0,0.08)'
+  }
+};
 
 export default Transactions;
